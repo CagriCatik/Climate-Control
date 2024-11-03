@@ -1,0 +1,55 @@
+# MATLAB specific files
+*.asv            # Autosave files
+*.fig            # Figure files
+*.m~             # Backup files
+*.aslx           # App Designer apps
+*.mexa64         # MATLAB Executable for Linux
+*.mexmaci64      # MATLAB Executable for Mac
+*.mexw64         # MATLAB Executable for Windows
+*.mex*           # All platform-specific executable files
+*.p              # Protected function files
+*.slxc           # Simulink Cache Files
+*.slxcproj       # Simulink Cache Project Files
+*.prj            # MATLAB Project files
+*.mltbx          # MATLAB Toolbox files
+*.mlappinstall   # MATLAB App Installer files
+
+# Simulink specific files
+*.slx            # Simulink model files
+*.mdl            # Simulink older model files
+*.slxp           # Simulink Project files
+*.slprj/         # Simulink Project folder
+./slprj          # Simulink Project folder
+*.autosave       # Autosave files
+slprj/
+*.slxc
+
+# Simulation Cache and Code Generation
+simulinkCache/   # Cache directory
+slprj/           # Code generation folder
+codegen/         # Code generation output folder
+*.log            # Log files
+*.mex*           # Executable files from code generation
+
+# MATLAB Editor temporary files
+.DS_Store        # macOS folder attribute files
+*.scc            # Source control temporary files
+*.bak            # Backup files
+*.lock           # Lock files for packages and apps
+
+# Other temporary files
+*.mat            # Workspace data files
+*.txt            # Temporary text files or notes
+*.csv            # Data files
+
+# MATLAB Workspace files
+*.mlapp         # App Designer project files
+*.m~            # MATLAB backup files
+*.backup*       # Backup files
+
+# Exclude configuration files that may differ across machines
+*.settings.mat
+*.settings.json
+
+# Ignore hidden MATLAB preferences folder
+**/.matlab/
