@@ -1,6 +1,25 @@
 [book]
+title = "Climate-Control"
 authors = ["CagriCatik"]
 language = "en"
 multilingual = false
 src = "src"
-title = "Climate-Control"
+
+[output.html]
+mathjax-support = true
+default-theme = "light" # Other options: "dark", "ayu"
+# Include additional HTML settings if needed:
+# preferred-dark-theme = "dark"
+# preferred-light-theme = "light"
+
+[output.html.renderers]
+mermaid = true  # Enable Mermaid.js for diagrams
+
+[output.html.search]
+enabled = true  # Enable search functionality in the HTML output
+
+[output.html.playground]
+editable = true  # Enables code editing directly in the book
+
+[preprocessor]
+# Preprocessor options can go here
