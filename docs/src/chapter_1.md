@@ -1,7 +1,5 @@
 # Vehicle Electrical System Simulation
 
-## Overview
-
 This documentation describes the simulation of a vehicle's electrical system using **Simulink** and **Simscape Electrical** in MATLAB. The system simulates the electrical interactions between an internal combustion (IC) engine, an alternator, a battery, and various electrical components such as a rectifier bridge, smoothing capacitor, and voltage and current sensors. This setup emulates the charging and discharging dynamics typically found in automotive applications.
 
 ## System Components

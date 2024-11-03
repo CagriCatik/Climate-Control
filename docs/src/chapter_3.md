@@ -1,5 +1,4 @@
 # Vehicle Electrical and Climate Control Systems Simulation
-## Overview
 
 This documentation provides an in-depth description of the **Vehicle Electrical and Climate Control Systems** model, which simulates the combined operation of a vehicle's climate control and electrical systems using **Simscape Electrical**, **Simulink**, and **Stateflow** in MATLAB. The model allows users to analyze how the climate control system impacts the overall vehicle electrical system, providing insights into energy consumption, load effects, and control dynamics.
 
@@ -38,18 +37,22 @@ The **Stateflow® Controller** implements the supervisory control logic for the 
 
 The heater model simulates a **heat exchanger** using the following equation:
 
-\[
+$$
 T_{\text{out}} = T_s - (T_s - T_{\text{in}}) e^{\left(\frac{-\pi \cdot D \cdot L \cdot h_c}{\dot{m} \cdot C_p}\right)}
-\]
+$$
 
 where:
-- \( T_s \) = Radiator wall temperature (constant)
-- \( D \) = Channel diameter (0.004 m)
-- \( L \) = Radiator thickness (0.05 m)
-- \( N \) = Number of channels (30,000)
-- \( k \) = Thermal conductivity of air (0.026 W/mK)
-- \( C_p \) = Specific heat of air (1007 J/kgK)
-- **Heat Transfer Coefficient (\( h_c \))** = 23.8 W/m²K (based on laminar flow)
+
+| Variable                     | Description                                     |
+|------------------------------|-------------------------------------------------|
+| **T_s**                      | Radiator wall temperature (constant)            |
+| **D**                        | Channel diameter (0.004 m)                      |
+| **L**                        | Radiator thickness (0.05 m)                     |
+| **N**                        | Number of channels (30,000)                     |
+| **k**                        | Thermal conductivity of air (0.026 W/mK)        |
+| **C_p**                      | Specific heat of air (1007 J/kgK)               |
+| **h_c**                      | Heat Transfer Coefficient: 23.8 W/m²K (based on laminar flow) |
+
 
 The model considers the **heater flap**, which adjusts its opening based on the difference between the setpoint and current cabin temperature. A larger temperature difference results in a wider flap opening, increasing the heating effect.
 
@@ -57,16 +60,20 @@ The model considers the **heater flap**, which adjusts its opening based on the 
 
 The air conditioner (AC) model interfaces with the vehicle electrical system through the compressor load, which affects the engine load when the AC is active. The AC model calculates the final air temperature using the following equation:
 
-\[
+$$
 y \cdot (w \cdot T_{\text{comp}}) = \dot{m} \cdot (h_4 - h_1)
-\]
+$$
 
 where:
-- \( y \) = Efficiency
-- \( \dot{m} \) = Mass flow rate of air
-- \( w \) = Engine speed
-- \( T_{\text{comp}} \) = Compressor torque
-- \( h_4, h_1 \) = Enthalpy at different stages of the process
+
+| Variable       | Description                                  |
+|----------------|----------------------------------------------|
+| **y**         | Efficiency                                   |
+| **ṁ**         | Mass flow rate of air                        |
+| **w**         | Engine speed                                 |
+| **T_comp**    | Compressor torque                            |
+| **h₄**, **h₁** | Enthalpy at different stages of the process |
+
 
 The **bang-bang control** for the AC system uses the engine speed and compressor torque to manage the temperature of the air exiting the AC system, providing effective cooling as needed.
 
@@ -81,7 +88,7 @@ The cabin temperature, as sensed by the driver, is affected by several factors:
    - Heat transfer between the outside and inside air is modeled based on their temperature difference, with a smaller mass flow rate factor accounting for radiative heating.
 
 3. **Occupant Heat Contribution**:
-   - The model adds approximately 100 W of heat energy per person in the cabin, simulating the impact of passengers on the cabin temperature.
+   - The model adds approximately 100 W of heat energy per person in the cabin, simulating the impact of passengers on cabin temperature.
 
 The **Thermometer Display** block outputs the temperature reading of a sensor behind the driver's head, which is calculated based on these heat transfer dynamics. When the model starts, this temperature begins at the external temperature (e.g., 18°C) and moves toward the user setpoint as the system adjusts.
 
@@ -108,15 +115,15 @@ The electrical system models the vehicle’s power generation and distribution, 
 
 ### Heat Exchange Equation (Heater Model)
 
-\[
+$$
 T_{\text{out}} = T_s - (T_s - T_{\text{in}}) e^{\left(\frac{-\pi \cdot D \cdot L \cdot h_c}{\dot{m} \cdot C_p}\right)}
-\]
+$$
 
 ### Energy Balance Equation (Air Conditioner Model)
 
-\[
+$$
 y \cdot (w \cdot T_{\text{comp}}) = \dot{m} \cdot (h_4 - h_1)
-\]
+$$
 
 ### Parameters
 
