@@ -1,0 +1,639 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Climate-Control</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> Vehicle Electrical System</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> Simulating Automatic Climate Control Systems</a></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> Vehicle Electrical and Climate Control Systems</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Climate-Control</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="vehicle-electrical-system-simulation"><a class="header" href="#vehicle-electrical-system-simulation">Vehicle Electrical System Simulation</a></h1>
+<h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
+<p>This documentation describes the simulation of a vehicle's electrical system using <strong>Simulink</strong> and <strong>Simscape Electrical</strong> in MATLAB. The system simulates the electrical interactions between an internal combustion (IC) engine, an alternator, a battery, and various electrical components such as a rectifier bridge, smoothing capacitor, and voltage and current sensors. This setup emulates the charging and discharging dynamics typically found in automotive applications.</p>
+<h2 id="system-components"><a class="header" href="#system-components">System Components</a></h2>
+<p>The vehicle electrical system model comprises the following major components:</p>
+<ol>
+<li>
+<p><strong>Internal Combustion (IC) Engine</strong>:</p>
+<ul>
+<li>Acts as the primary power source by driving the shaft of the alternator. When the IC engine is operational, it generates the torque necessary to produce AC power in the alternator.</li>
+</ul>
+</li>
+<li>
+<p><strong>Alternator</strong>:</p>
+<ul>
+<li>A three-phase synchronous machine that generates alternating current (AC) when driven by the IC engine. This machine's field current is controlled to regulate the DC bus voltage.</li>
+<li>Includes a <strong>field control</strong> mechanism to stabilize and control voltage output on the DC bus. This is achieved using the <strong>Synchronous Machine Round Rotor block</strong> in Simulink.</li>
+</ul>
+</li>
+<li>
+<p><strong>Diode Trio</strong>:</p>
+<ul>
+<li>Converts AC current generated by the alternator into direct current (DC) for feeding into the alternator's field windings, facilitating regulated alternator operation.</li>
+</ul>
+</li>
+<li>
+<p><strong>Rectifier Bridge</strong>:</p>
+<ul>
+<li>A 6-pulse bridge that converts the alternator's three-phase AC output into DC. This DC voltage charges the vehicle’s battery and supplies power to other vehicle loads.</li>
+</ul>
+</li>
+<li>
+<p><strong>Battery</strong>:</p>
+<ul>
+<li>Stores electrical energy and provides power to the alternator field winding when the IC engine is off or when additional power is required. It also maintains system stability by buffering voltage changes.</li>
+</ul>
+</li>
+<li>
+<p><strong>Indicator Lamp</strong>:</p>
+<ul>
+<li>Illuminates when the IC engine is off or when the alternator is not generating power, signaling an inactive alternator state.</li>
+</ul>
+</li>
+<li>
+<p><strong>Smoothing Capacitor</strong>:</p>
+<ul>
+<li>Reduces voltage ripples in the DC output, providing a stable DC voltage for the electrical system.</li>
+</ul>
+</li>
+<li>
+<p><strong>Current and Voltage Sensors</strong>:</p>
+<ul>
+<li><strong>AC Current Sensor</strong>: Measures the current generated by the alternator.</li>
+<li><strong>DC Current Sensor</strong>: Monitors the current flowing through the DC bus.</li>
+<li><strong>Voltage Sensor</strong>: Measures the voltage across the DC bus to monitor the charging state and stability of the system.</li>
+</ul>
+</li>
+<li>
+<p><strong>Load</strong>:</p>
+<ul>
+<li>Represents the vehicle's electrical consumption, including components such as lights, infotainment, and other electronic systems.</li>
+</ul>
+</li>
+</ol>
+<h2 id="operation-of-the-system"><a class="header" href="#operation-of-the-system">Operation of the System</a></h2>
+<p>The vehicle electrical system operates as follows:</p>
+<ol>
+<li>
+<p><strong>Engine Off State</strong>:</p>
+<ul>
+<li>When the IC engine is off, the battery supplies current to the alternator’s field winding to keep it ready for operation.</li>
+<li>The <strong>indicator lamp</strong> is illuminated, signaling that the alternator is not generating power.</li>
+</ul>
+</li>
+<li>
+<p><strong>Engine Running State</strong>:</p>
+<ul>
+<li>When the IC engine starts running, it drives the alternator, which begins to generate AC power.</li>
+<li>The <strong>diode trio</strong> rectifies this AC power to DC and supplies it to the alternator's field winding, turning off the <strong>indicator lamp</strong> since the alternator is now operational and generating power.</li>
+</ul>
+</li>
+<li>
+<p><strong>Charging and Regulation</strong>:</p>
+<ul>
+<li>As the alternator generates AC power, the <strong>rectifier bridge</strong> converts it to DC, which then charges the battery and supplies power to the DC bus.</li>
+<li>The DC bus voltage is regulated by the alternator’s field control. The field control mechanism adjusts the alternator’s output to maintain a stable DC bus voltage within specific limits.</li>
+</ul>
+</li>
+<li>
+<p><strong>Voltage Regulation</strong>:</p>
+<ul>
+<li>The system maintains the DC bus voltage within a defined range, typically between 13.5 V (lower limit) and 14.5 V (upper limit).</li>
+<li>When the DC bus voltage exceeds 14.5 V, indicating that the battery is fully charged, the current flowing to the alternator's field winding is reduced. This prevents overcharging.</li>
+<li>When the DC bus voltage drops below 13.5 V, the diode trio reconnects to the alternator’s field winding, allowing more current to flow to stabilize the voltage.</li>
+</ul>
+</li>
+</ol>
+<h2 id="system-behavior-under-different-conditions"><a class="header" href="#system-behavior-under-different-conditions">System Behavior Under Different Conditions</a></h2>
+<h3 id="start-up"><a class="header" href="#start-up">Start-Up</a></h3>
+<ul>
+<li>Upon starting, the IC engine drives the alternator, which generates AC power. The rectifier bridge then converts this AC into DC for the battery and loads.</li>
+</ul>
+<h3 id="normal-operation"><a class="header" href="#normal-operation">Normal Operation</a></h3>
+<ul>
+<li>During normal operation, the alternator supplies sufficient power to keep the battery charged and to power the vehicle’s electrical load. The voltage sensors continuously monitor the DC bus voltage, allowing field control to adjust the alternator's output as needed.</li>
+</ul>
+<h3 id="high-load-condition"><a class="header" href="#high-load-condition">High Load Condition</a></h3>
+<ul>
+<li>In situations where the load on the DC bus increases (e.g., multiple electronic components drawing power simultaneously), the voltage on the DC bus may drop. The field control responds by increasing the field current, boosting the alternator’s output to stabilize the voltage.</li>
+</ul>
+<h3 id="engine-off-condition"><a class="header" href="#engine-off-condition">Engine Off Condition</a></h3>
+<ul>
+<li>When the IC engine is turned off, the alternator stops generating power. The battery takes over as the sole power source for the field winding and the vehicle's electrical load, ensuring the electrical system remains functional.</li>
+</ul>
+<h2 id="key-simulation-parameters"><a class="header" href="#key-simulation-parameters">Key Simulation Parameters</a></h2>
+<p>The simulation uses specific voltage thresholds to regulate power flow and prevent overcharging:</p>
+<ul>
+<li><strong>Upper Voltage Limit</strong>: 14.5 V – If the DC bus voltage exceeds this threshold, current to the alternator field winding is reduced.</li>
+<li><strong>Lower Voltage Limit</strong>: 13.5 V – If the DC bus voltage drops below this limit, the diode trio reconnects to the field winding, increasing current flow to stabilize the voltage.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="automatic-climate-control-system-simulation"><a class="header" href="#automatic-climate-control-system-simulation">Automatic Climate Control System Simulation</a></h1>
+<h2 id="overview-1"><a class="header" href="#overview-1">Overview</a></h2>
+<p>This documentation describes the simulation of an <strong>automatic climate control system</strong> for a vehicle using <strong>Simulink</strong> and <strong>Stateflow</strong> in MATLAB. The simulation enables setting desired internal temperatures, adjusting to external conditions, and dynamically managing the vehicle's climate system, which includes heater, air conditioner, blower, and air distribution mechanisms.</p>
+<h2 id="components-of-the-system"><a class="header" href="#components-of-the-system">Components of the System</a></h2>
+<p>The simulation model includes various components to emulate a real-world climate control system, each of which is described below:</p>
+<ol>
+<li>
+<p><strong>User Setpoint in Celsius</strong>:</p>
+<ul>
+<li>Allows users to specify the desired temperature inside the car. This is the target temperature that the climate control system aims to achieve.</li>
+</ul>
+</li>
+<li>
+<p><strong>External Temperature in Celsius</strong>:</p>
+<ul>
+<li>This block allows users to input the external (ambient) temperature, simulating different outside conditions that the climate control system will respond to.</li>
+</ul>
+</li>
+<li>
+<p><strong>Thermometer Display</strong>:</p>
+<ul>
+<li>Displays the temperature sensed behind the driver’s head, which represents the temperature the driver feels. This temperature reading reflects the real-time climate control adjustments in response to the setpoint and external conditions.</li>
+</ul>
+</li>
+</ol>
+<h2 id="stateflow-controller"><a class="header" href="#stateflow-controller">Stateflow® Controller</a></h2>
+<p>The <strong>Stateflow controller</strong> handles the supervisory control logic of the climate control system. It coordinates the operation of the heater, air conditioner, blower, and air distribution mechanisms based on the difference between the setpoint and current cabin temperatures. Below are key elements of the control logic:</p>
+<ol>
+<li>
+<p><strong>Heater and Air Conditioner Control</strong>:</p>
+<ul>
+<li><strong>Heating Mode</strong>: When the setpoint temperature is at least 0.5°C higher than the current car temperature, the heater activates. It remains on until the car's temperature is within 0.5°C of the setpoint.</li>
+<li><strong>Cooling Mode</strong>: When the setpoint temperature is at least 0.5°C lower than the current temperature, the air conditioner activates. It remains on until the car temperature is within 0.5°C of the setpoint.</li>
+<li><strong>Dead Band</strong>: A dead band of 0.5°C prevents the system from continuously toggling the heater or air conditioner, ensuring smoother operation.</li>
+</ul>
+</li>
+<li>
+<p><strong>Blower Control</strong>:</p>
+<ul>
+<li>The <strong>Blower</strong> adjusts its speed based on the temperature difference between the setpoint and current cabin temperature. A larger difference results in a higher blower speed, accelerating the temperature adjustment process. When the cabin temperature reaches within 0.5°C of the setpoint, the blower turns off.</li>
+</ul>
+</li>
+<li>
+<p><strong>Air Distribution and Recycling Air Control</strong>:</p>
+<ul>
+<li><strong>Air Distribution (AirDist)</strong> and <strong>Recycling Air (Recyc_Air)</strong> are controlled by switches in Stateflow, which manage airflow within the cabin.</li>
+<li><strong>Defrost Mode</strong>: To enhance window defrosting, the system implements an internal transition that turns off air recycling when the defrost state is active.</li>
+</ul>
+</li>
+</ol>
+<h2 id="heater-and-air-conditioner-models"><a class="header" href="#heater-and-air-conditioner-models">Heater and Air Conditioner Models</a></h2>
+<h3 id="heater-model"><a class="header" href="#heater-model">Heater Model</a></h3>
+<p>The heater model uses a <strong>heat exchange equation</strong> to determine the temperature of the air exiting the heater:</p>
+<p>[
+T_{\text{out}} = T_s - (T_s - T_{\text{in}}) e^{\left(\frac{-\pi \cdot D \cdot L \cdot h_c}{\dot{m} \cdot C_p}\right)}
+]</p>
+<p>where:</p>
+<ul>
+<li>( T_s ) = Radiator wall temperature (constant)</li>
+<li>( D ) = Channel diameter (0.004 m)</li>
+<li>( L ) = Radiator thickness (0.05 m)</li>
+<li>( N ) = Number of channels (30,000)</li>
+<li>( k ) = Thermal conductivity of air (0.026 W/mK)</li>
+<li>( C_p ) = Specific heat of air (1007 J/kgK)</li>
+<li><strong>Heat Transfer Coefficient (( h_c ))</strong> = 23.8 W/m²K (based on laminar flow)</li>
+</ul>
+<p>The heater's effectiveness increases with the temperature difference between the setpoint and the current interior temperature, just like the blower operation.</p>
+<h3 id="air-conditioner-model"><a class="header" href="#air-conditioner-model">Air Conditioner Model</a></h3>
+<p>The air conditioner model applies an <strong>energy balance equation</strong> based on compressor parameters:</p>
+<p>[
+y \cdot (w \cdot T_{\text{comp}}) = \dot{m} \cdot (h_4 - h_1)
+]</p>
+<p>where:</p>
+<ul>
+<li>( y ) = Efficiency of the A/C system</li>
+<li>( \dot{m} ) = Mass flow rate of air</li>
+<li>( w ) = Engine speed</li>
+<li>( T_{\text{comp}} ) = Compressor torque</li>
+<li>( h_4, h_1 ) = Enthalpy at different points in the cycle</li>
+</ul>
+<p>The <strong>bang-bang control</strong> for the A/C system uses engine speed and compressor torque to manage the temperature of air exiting the A/C system.</p>
+<h2 id="cabin-heat-transfer-model"><a class="header" href="#cabin-heat-transfer-model">Cabin Heat Transfer Model</a></h2>
+<p>The climate control system accounts for various factors affecting the temperature felt by the driver:</p>
+<ol>
+<li>
+<p><strong>Temperature of Air Exiting the Vents</strong>:</p>
+<ul>
+<li>The model calculates the difference between the temperature of the vent air and the current cabin temperature, then scales it by the fan speed proportion (mass flow rate).</li>
+</ul>
+</li>
+<li>
+<p><strong>External Temperature Influence</strong>:</p>
+<ul>
+<li>The model simulates heat transfer between the external air and the cabin, based on the difference between the external and cabin temperatures and scaled by a small mass flow rate.</li>
+</ul>
+</li>
+<li>
+<p><strong>Occupant Heat Contribution</strong>:</p>
+<ul>
+<li>For each person in the car, the model adds approximately 100 W of heat energy, simulating the impact of passengers on the cabin temperature.</li>
+</ul>
+</li>
+</ol>
+<p>The <strong>Thermometer Display</strong> block shows the temperature sensed behind the driver's head, which represents the perceived temperature of the cabin interior. By default, the temperature reading starts at the external temperature (18°C) and moves toward the setpoint temperature (9°C) as the simulation progresses.</p>
+<h2 id="key-simulation-equations-and-parameters"><a class="header" href="#key-simulation-equations-and-parameters">Key Simulation Equations and Parameters</a></h2>
+<h3 id="heat-exchange-equation-heater-model"><a class="header" href="#heat-exchange-equation-heater-model">Heat Exchange Equation (Heater Model)</a></h3>
+<p>[
+T_{\text{out}} = T_s - (T_s - T_{\text{in}}) e^{\left(\frac{-\pi \cdot D \cdot L \cdot h_c}{\dot{m} \cdot C_p}\right)}
+]</p>
+<h3 id="energy-balance-equation-air-conditioner-model"><a class="header" href="#energy-balance-equation-air-conditioner-model">Energy Balance Equation (Air Conditioner Model)</a></h3>
+<p>[
+y \cdot (w \cdot T_{\text{comp}}) = \dot{m} \cdot (h_4 - h_1)
+]</p>
+<h3 id="parameters"><a class="header" href="#parameters">Parameters</a></h3>
+<ul>
+<li><strong>Temperature Dead Band</strong>: 0.5°C (prevents continuous toggling of heater/AC)</li>
+<li><strong>Occupant Heat Load</strong>: 100 W per person</li>
+<li><strong>Vent Airflow Adjustment</strong>: Proportional to the difference between setpoint and current cabin temperature</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="vehicle-electrical-and-climate-control-systems-simulation"><a class="header" href="#vehicle-electrical-and-climate-control-systems-simulation">Vehicle Electrical and Climate Control Systems Simulation</a></h1>
+<h2 id="overview-2"><a class="header" href="#overview-2">Overview</a></h2>
+<p>This documentation provides an in-depth description of the <strong>Vehicle Electrical and Climate Control Systems</strong> model, which simulates the combined operation of a vehicle's climate control and electrical systems using <strong>Simscape Electrical</strong>, <strong>Simulink</strong>, and <strong>Stateflow</strong> in MATLAB. The model allows users to analyze how the climate control system impacts the overall vehicle electrical system, providing insights into energy consumption, load effects, and control dynamics.</p>
+<h2 id="climate-control-system"><a class="header" href="#climate-control-system">Climate Control System</a></h2>
+<p>The <strong>Climate Control System</strong> is responsible for managing the interior temperature of the vehicle, adjusting based on the user’s preferred settings and external conditions. The primary components and their functions are as follows:</p>
+<ol>
+<li>
+<p><strong>User Setpoint in Celsius</strong>:</p>
+<ul>
+<li>Users can specify their desired cabin temperature here. This block allows entry of a temperature value that serves as the target for the climate control system.</li>
+</ul>
+</li>
+<li>
+<p><strong>External Temperature in Celsius</strong>:</p>
+<ul>
+<li>This block accepts the external (ambient) temperature value, simulating different weather conditions that the system will adapt to.</li>
+</ul>
+</li>
+<li>
+<p><strong>Thermometer Display</strong>:</p>
+<ul>
+<li>Displays the temperature sensed behind the driver’s head. This temperature represents the climate the driver feels and reflects the effectiveness of the climate control adjustments.</li>
+</ul>
+</li>
+</ol>
+<h2 id="stateflow-controller-1"><a class="header" href="#stateflow-controller-1">Stateflow® Controller</a></h2>
+<p>The <strong>Stateflow® Controller</strong> implements the supervisory control logic for the climate control system. The control chart, named <strong>Temperature Control</strong>, dictates the operation of the heater, air conditioner, blower, and air distribution systems. Key control elements include:</p>
+<ol>
+<li>
+<p><strong>Heater and Air Conditioner Control</strong>:</p>
+<ul>
+<li><strong>Heater Activation</strong>: If the setpoint temperature is at least 0.5°C above the current internal vehicle temperature, the heater switches on. It remains active until the cabin temperature is within 0.5°C of the setpoint.</li>
+<li><strong>Air Conditioner Activation</strong>: If the setpoint temperature is at least 0.5°C below the current cabin temperature, the air conditioner turns on and stays active until the temperature is within 0.5°C of the setpoint.</li>
+<li><strong>Dead Band</strong>: A dead band of 0.5°C is implemented to prevent continuous toggling between heating and cooling, ensuring stable operation.</li>
+</ul>
+</li>
+<li>
+<p><strong>Blower Control</strong>:</p>
+<ul>
+<li>The <strong>Blower</strong> output is proportional to the temperature difference between the setpoint and the current cabin temperature. A larger difference increases blower speed, allowing faster temperature adjustment. Once the cabin temperature is within 0.5°C of the setpoint, the blower turns off.</li>
+</ul>
+</li>
+<li>
+<p><strong>Air Distribution and Recycling Air Control</strong>:</p>
+<ul>
+<li><strong>Air Distribution (AirDist)</strong> and <strong>Recycling Air (Recyc_Air)</strong> are controlled by switches that trigger the Stateflow chart, managing airflow for various cabin zones.</li>
+<li><strong>Defrost Mode</strong>: To support window defrosting, the controller implements an internal transition within the AirDist and Recyc_Air states. When defrost is active, air recycling is turned off to ensure effective defogging.</li>
+</ul>
+</li>
+</ol>
+<h2 id="heater-and-air-conditioner-models-1"><a class="header" href="#heater-and-air-conditioner-models-1">Heater and Air Conditioner Models</a></h2>
+<h3 id="heater-model-1"><a class="header" href="#heater-model-1">Heater Model</a></h3>
+<p>The heater model simulates a <strong>heat exchanger</strong> using the following equation:</p>
+<p>[
+T_{\text{out}} = T_s - (T_s - T_{\text{in}}) e^{\left(\frac{-\pi \cdot D \cdot L \cdot h_c}{\dot{m} \cdot C_p}\right)}
+]</p>
+<p>where:</p>
+<ul>
+<li>( T_s ) = Radiator wall temperature (constant)</li>
+<li>( D ) = Channel diameter (0.004 m)</li>
+<li>( L ) = Radiator thickness (0.05 m)</li>
+<li>( N ) = Number of channels (30,000)</li>
+<li>( k ) = Thermal conductivity of air (0.026 W/mK)</li>
+<li>( C_p ) = Specific heat of air (1007 J/kgK)</li>
+<li><strong>Heat Transfer Coefficient (( h_c ))</strong> = 23.8 W/m²K (based on laminar flow)</li>
+</ul>
+<p>The model considers the <strong>heater flap</strong>, which adjusts its opening based on the difference between the setpoint and current cabin temperature. A larger temperature difference results in a wider flap opening, increasing the heating effect.</p>
+<h3 id="air-conditioner-model-1"><a class="header" href="#air-conditioner-model-1">Air Conditioner Model</a></h3>
+<p>The air conditioner (AC) model interfaces with the vehicle electrical system through the compressor load, which affects the engine load when the AC is active. The AC model calculates the final air temperature using the following equation:</p>
+<p>[
+y \cdot (w \cdot T_{\text{comp}}) = \dot{m} \cdot (h_4 - h_1)
+]</p>
+<p>where:</p>
+<ul>
+<li>( y ) = Efficiency</li>
+<li>( \dot{m} ) = Mass flow rate of air</li>
+<li>( w ) = Engine speed</li>
+<li>( T_{\text{comp}} ) = Compressor torque</li>
+<li>( h_4, h_1 ) = Enthalpy at different stages of the process</li>
+</ul>
+<p>The <strong>bang-bang control</strong> for the AC system uses the engine speed and compressor torque to manage the temperature of the air exiting the AC system, providing effective cooling as needed.</p>
+<h2 id="cabin-heat-transfer-model-1"><a class="header" href="#cabin-heat-transfer-model-1">Cabin Heat Transfer Model</a></h2>
+<p>The cabin temperature, as sensed by the driver, is affected by several factors:</p>
+<ol>
+<li>
+<p><strong>Vent Air Temperature</strong>:</p>
+<ul>
+<li>The model calculates the difference between the air temperature exiting the vents and the cabin’s current temperature, scaled by the fan speed (mass flow rate).</li>
+</ul>
+</li>
+<li>
+<p><strong>External Air Temperature</strong>:</p>
+<ul>
+<li>Heat transfer between the outside and inside air is modeled based on their temperature difference, with a smaller mass flow rate factor accounting for radiative heating.</li>
+</ul>
+</li>
+<li>
+<p><strong>Occupant Heat Contribution</strong>:</p>
+<ul>
+<li>The model adds approximately 100 W of heat energy per person in the cabin, simulating the impact of passengers on the cabin temperature.</li>
+</ul>
+</li>
+</ol>
+<p>The <strong>Thermometer Display</strong> block outputs the temperature reading of a sensor behind the driver's head, which is calculated based on these heat transfer dynamics. When the model starts, this temperature begins at the external temperature (e.g., 18°C) and moves toward the user setpoint as the system adjusts.</p>
+<h2 id="electrical-system"><a class="header" href="#electrical-system">Electrical System</a></h2>
+<p>The electrical system models the vehicle’s power generation and distribution, particularly at idle speed, where loading effects from the climate control system are notable. Key elements include:</p>
+<ol>
+<li>
+<p><strong>Alternator</strong>:</p>
+<ul>
+<li>Modeled as a synchronous machine with regulated field current, the alternator maintains the DC bus voltage necessary for the vehicle’s electrical needs. A PID controller ensures the alternator operates at the correct speed, regardless of varying loads.</li>
+</ul>
+</li>
+<li>
+<p><strong>Rectifier Bridge</strong>:</p>
+<ul>
+<li>Converts the alternator’s three-phase AC output to DC. This DC power charges the vehicle battery and supplies the vehicle’s DC bus.</li>
+</ul>
+</li>
+<li>
+<p><strong>Battery and DC Bus</strong>:</p>
+<ul>
+<li>The battery stabilizes the DC bus voltage, providing power to various vehicle systems, including the climate control fan, wipers, and radio.</li>
+</ul>
+</li>
+<li>
+<p><strong>Fan and DC Bus Load</strong>:</p>
+<ul>
+<li>The climate control fan is connected to the DC bus. As the temperature difference between the setpoint and current cabin temperature decreases, the fan speed and load on the DC bus also decrease.</li>
+</ul>
+</li>
+<li>
+<p><strong>Engine Speed Variation</strong>:</p>
+<ul>
+<li>The model allows for changes in engine speed to analyze its effect on DC bus voltage. Lower or higher engine speeds influence the alternator output, which in turn affects the DC bus voltage stability.</li>
+</ul>
+</li>
+</ol>
+<h2 id="key-equations-and-parameters"><a class="header" href="#key-equations-and-parameters">Key Equations and Parameters</a></h2>
+<h3 id="heat-exchange-equation-heater-model-1"><a class="header" href="#heat-exchange-equation-heater-model-1">Heat Exchange Equation (Heater Model)</a></h3>
+<p>[
+T_{\text{out}} = T_s - (T_s - T_{\text{in}}) e^{\left(\frac{-\pi \cdot D \cdot L \cdot h_c}{\dot{m} \cdot C_p}\right)}
+]</p>
+<h3 id="energy-balance-equation-air-conditioner-model-1"><a class="header" href="#energy-balance-equation-air-conditioner-model-1">Energy Balance Equation (Air Conditioner Model)</a></h3>
+<p>[
+y \cdot (w \cdot T_{\text{comp}}) = \dot{m} \cdot (h_4 - h_1)
+]</p>
+<h3 id="parameters-1"><a class="header" href="#parameters-1">Parameters</a></h3>
+<ul>
+<li><strong>Temperature Dead Band</strong>: 0.5°C (prevents continuous toggling of heater/AC)</li>
+<li><strong>Occupant Heat Load</strong>: 100 W per person</li>
+<li><strong>Fan Load Reduction</strong>: Proportional to temperature difference between setpoint and current cabin temperature</li>
+<li><strong>Engine Speed Influence</strong>: Allows simulation of varying engine load on the alternator and DC bus voltage</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="ace.js"></script>
+        <script src="editor.js"></script>
+        <script src="mode-rust.js"></script>
+        <script src="theme-dawn.js"></script>
+        <script src="theme-tomorrow_night.js"></script>
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            MathJax.Hub.Register.StartupHook('End', function() {
+                window.setTimeout(window.print, 100);
+            });
+        });
+        </script>
+
+    </div>
+    </body>
+</html>

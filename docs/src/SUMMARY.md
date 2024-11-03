@@ -1,5 +1,5 @@
 # Climate Control
 
-- [vehicle_climate_control](./chapter_1.md)
-- [vehicle_climate_elec](./chapter_1.md)
-- [vehicle_electric](./chapter_1.md)
+- [Vehicle Electrical System](./chapter_1.md)
+- [Simulating Automatic Climate Control Systems](./chapter_2.md)
+- [Vehicle Electrical and Climate Control Systems](./chapter_3.md)
