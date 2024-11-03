@@ -176,10 +176,9 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="automatic-climate-control-system-simulation"><a class="header" href="#automatic-climate-control-system-simulation">Automatic Climate Control System Simulation</a></h1>
-<h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
-<p>This documentation describes the simulation of an <strong>automatic climate control system</strong> for a vehicle using <strong>Simulink</strong> and <strong>Stateflow</strong> in MATLAB. The simulation enables setting desired internal temperatures, adjusting to external conditions, and dynamically managing the vehicle's climate system, which includes heater, air conditioner, blower, and air distribution mechanisms.</p>
+<p>This documentation describes the simulation of an <strong>automatic climate control system</strong> for a vehicle using <strong>Simulink</strong> and <strong>Stateflow</strong> in MATLAB. The simulation enables setting desired internal temperatures, adjusting to external conditions, and dynamically managing the vehicle's climate system, which includes the heater, air conditioner, blower, and air distribution mechanisms.</p>
 <h2 id="components-of-the-system"><a class="header" href="#components-of-the-system">Components of the System</a></h2>
-<p>The simulation model includes various components to emulate a real-world climate control system, each of which is described below:</p>
+<p>The simulation model includes various components to emulate a real-world climate control system, each described below:</p>
 <ol>
 <li>
 <p><strong>User Setpoint in Celsius</strong>:</p>
@@ -190,31 +189,31 @@
 <li>
 <p><strong>External Temperature in Celsius</strong>:</p>
 <ul>
-<li>This block allows users to input the external (ambient) temperature, simulating different outside conditions that the climate control system will respond to.</li>
+<li>This block allows users to input the external (ambient) temperature, simulating different outside conditions to which the climate control system will respond.</li>
 </ul>
 </li>
 <li>
 <p><strong>Thermometer Display</strong>:</p>
 <ul>
-<li>Displays the temperature sensed behind the driver’s head, which represents the temperature the driver feels. This temperature reading reflects the real-time climate control adjustments in response to the setpoint and external conditions.</li>
+<li>Displays the temperature sensed behind the driver’s head, representing the temperature the driver feels. This reading reflects real-time adjustments in response to the setpoint and external conditions.</li>
 </ul>
 </li>
 </ol>
 <h2 id="stateflow-controller"><a class="header" href="#stateflow-controller">Stateflow® Controller</a></h2>
-<p>The <strong>Stateflow controller</strong> handles the supervisory control logic of the climate control system. It coordinates the operation of the heater, air conditioner, blower, and air distribution mechanisms based on the difference between the setpoint and current cabin temperatures. Below are key elements of the control logic:</p>
+<p>The <strong>Stateflow controller</strong> handles the supervisory control logic of the climate control system. It coordinates the operation of the heater, air conditioner, blower, and air distribution mechanisms based on the difference between the setpoint and current cabin temperatures. Key elements of the control logic are:</p>
 <ol>
 <li>
 <p><strong>Heater and Air Conditioner Control</strong>:</p>
 <ul>
-<li><strong>Heating Mode</strong>: When the setpoint temperature is at least 0.5°C higher than the current car temperature, the heater activates. It remains on until the car's temperature is within 0.5°C of the setpoint.</li>
+<li><strong>Heating Mode</strong>: When the setpoint temperature is at least 0.5°C higher than the current cabin temperature, the heater activates. It remains on until the car's temperature is within 0.5°C of the setpoint.</li>
 <li><strong>Cooling Mode</strong>: When the setpoint temperature is at least 0.5°C lower than the current temperature, the air conditioner activates. It remains on until the car temperature is within 0.5°C of the setpoint.</li>
-<li><strong>Dead Band</strong>: A dead band of 0.5°C prevents the system from continuously toggling the heater or air conditioner, ensuring smoother operation.</li>
+<li><strong>Dead Band</strong>: A dead band of 0.5°C prevents continuous toggling of the heater or air conditioner, ensuring smoother operation.</li>
 </ul>
 </li>
 <li>
 <p><strong>Blower Control</strong>:</p>
 <ul>
-<li>The <strong>Blower</strong> adjusts its speed based on the temperature difference between the setpoint and current cabin temperature. A larger difference results in a higher blower speed, accelerating the temperature adjustment process. When the cabin temperature reaches within 0.5°C of the setpoint, the blower turns off.</li>
+<li>The <strong>Blower</strong> adjusts its speed based on the temperature difference between the setpoint and current cabin temperature. A larger difference results in a higher blower speed, accelerating temperature adjustment. When the cabin temperature reaches within 0.5°C of the setpoint, the blower turns off.</li>
 </ul>
 </li>
 <li>
@@ -228,32 +227,32 @@
 <h2 id="heater-and-air-conditioner-models"><a class="header" href="#heater-and-air-conditioner-models">Heater and Air Conditioner Models</a></h2>
 <h3 id="heater-model"><a class="header" href="#heater-model">Heater Model</a></h3>
 <p>The heater model uses a <strong>heat exchange equation</strong> to determine the temperature of the air exiting the heater:</p>
-<p>[
+<p>$$
 T_{\text{out}} = T_s - (T_s - T_{\text{in}}) e^{\left(\frac{-\pi \cdot D \cdot L \cdot h_c}{\dot{m} \cdot C_p}\right)}
-]</p>
+$$</p>
 <p>where:</p>
 <ul>
-<li>( T_s ) = Radiator wall temperature (constant)</li>
-<li>( D ) = Channel diameter (0.004 m)</li>
-<li>( L ) = Radiator thickness (0.05 m)</li>
-<li>( N ) = Number of channels (30,000)</li>
-<li>( k ) = Thermal conductivity of air (0.026 W/mK)</li>
-<li>( C_p ) = Specific heat of air (1007 J/kgK)</li>
+<li>( T_s ): Radiator wall temperature (constant)</li>
+<li>( D ): Channel diameter (0.004 m)</li>
+<li>( L ): Radiator thickness (0.05 m)</li>
+<li>( N ): Number of channels (30,000)</li>
+<li>( k ): Thermal conductivity of air (0.026 W/mK)</li>
+<li>( C_p ): Specific heat of air (1007 J/kgK)</li>
 <li><strong>Heat Transfer Coefficient (( h_c ))</strong> = 23.8 W/m²K (based on laminar flow)</li>
 </ul>
-<p>The heater's effectiveness increases with the temperature difference between the setpoint and the current interior temperature, just like the blower operation.</p>
+<p>The heater's effectiveness increases with the temperature difference between the setpoint and the current interior temperature, similar to blower operation.</p>
 <h3 id="air-conditioner-model"><a class="header" href="#air-conditioner-model">Air Conditioner Model</a></h3>
 <p>The air conditioner model applies an <strong>energy balance equation</strong> based on compressor parameters:</p>
-<p>[
+<p>$$
 y \cdot (w \cdot T_{\text{comp}}) = \dot{m} \cdot (h_4 - h_1)
-]</p>
+$$</p>
 <p>where:</p>
 <ul>
-<li>( y ) = Efficiency of the A/C system</li>
-<li>( \dot{m} ) = Mass flow rate of air</li>
-<li>( w ) = Engine speed</li>
-<li>( T_{\text{comp}} ) = Compressor torque</li>
-<li>( h_4, h_1 ) = Enthalpy at different points in the cycle</li>
+<li>( y ): Efficiency of the A/C system</li>
+<li>( \dot{m} ): Mass flow rate of air</li>
+<li>( w ): Engine speed</li>
+<li>( T_{\text{comp}} ): Compressor torque</li>
+<li>( h_4, h_1 ): Enthalpy at different points in the cycle</li>
 </ul>
 <p>The <strong>bang-bang control</strong> for the A/C system uses engine speed and compressor torque to manage the temperature of air exiting the A/C system.</p>
 <h2 id="cabin-heat-transfer-model"><a class="header" href="#cabin-heat-transfer-model">Cabin Heat Transfer Model</a></h2>
@@ -274,20 +273,20 @@ y \cdot (w \cdot T_{\text{comp}}) = \dot{m} \cdot (h_4 - h_1)
 <li>
 <p><strong>Occupant Heat Contribution</strong>:</p>
 <ul>
-<li>For each person in the car, the model adds approximately 100 W of heat energy, simulating the impact of passengers on the cabin temperature.</li>
+<li>For each person in the car, the model adds approximately 100 W of heat energy, simulating the impact of passengers on cabin temperature.</li>
 </ul>
 </li>
 </ol>
-<p>The <strong>Thermometer Display</strong> block shows the temperature sensed behind the driver's head, which represents the perceived temperature of the cabin interior. By default, the temperature reading starts at the external temperature (18°C) and moves toward the setpoint temperature (9°C) as the simulation progresses.</p>
+<p>The <strong>Thermometer Display</strong> block shows the temperature sensed behind the driver's head, representing the perceived temperature of the cabin interior. By default, the temperature reading starts at the external temperature (18°C) and moves toward the setpoint temperature (9°C) as the simulation progresses.</p>
 <h2 id="key-simulation-equations-and-parameters"><a class="header" href="#key-simulation-equations-and-parameters">Key Simulation Equations and Parameters</a></h2>
 <h3 id="heat-exchange-equation-heater-model"><a class="header" href="#heat-exchange-equation-heater-model">Heat Exchange Equation (Heater Model)</a></h3>
-<p>[
+<p>$$
 T_{\text{out}} = T_s - (T_s - T_{\text{in}}) e^{\left(\frac{-\pi \cdot D \cdot L \cdot h_c}{\dot{m} \cdot C_p}\right)}
-]</p>
+$$</p>
 <h3 id="energy-balance-equation-air-conditioner-model"><a class="header" href="#energy-balance-equation-air-conditioner-model">Energy Balance Equation (Air Conditioner Model)</a></h3>
-<p>[
+<p>$$
 y \cdot (w \cdot T_{\text{comp}}) = \dot{m} \cdot (h_4 - h_1)
-]</p>
+$$</p>
 <h3 id="parameters"><a class="header" href="#parameters">Parameters</a></h3>
 <ul>
 <li><strong>Temperature Dead Band</strong>: 0.5°C (prevents continuous toggling of heater/AC)</li>
