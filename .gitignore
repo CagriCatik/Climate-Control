@@ -1,3 +1,6 @@
+# mdBook
+book
+
 # MATLAB specific files
 *.asv            # Autosave files
 *.fig            # Figure files
